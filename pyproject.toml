@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vsas"
+version = "0.1.0"
+description = "Vendor Software Assurance Scanner — static compliance testing of third-party software"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Adriano Huttener" }]
+keywords = ["grc", "tprm", "sbom", "compliance", "soc2", "nist", "hipaa", "gdpr", "iso27001"]
+dependencies = ["pefile>=2024.8.26", "pyelftools>=0.31", "PyYAML>=6.0"]
+
+[project.urls]
+Homepage = "https://github.com/ahuttener/vendor-software-assurance-scanner"
+
+[project.scripts]
+vsas = "vsas.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["vsas*"]
+
+[tool.setuptools.package-data]
+vsas = ["frameworks/*.yaml"]

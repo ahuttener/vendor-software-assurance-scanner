@@ -1,0 +1,355 @@
+# =============================================================================
+# VSAS control crosswalk
+# -----------------------------------------------------------------------------
+# This file is the heart of the tool. Each entry under `findings:` is a type of
+# issue the scanner can detect in a vendor-supplied binary. For each one we give:
+#   - a control-testing procedure (how the evidence is gathered),
+#   - what a PASS / FAIL means,
+#   - remediation guidance, and
+#   - the control identifiers it maps to across every supported framework.
+#
+# Control IDs are written exactly as the source framework writes them so an
+# auditor can look each one up in the primary source listed under `frameworks:`.
+# Where a framework's applicability depends on context (e.g. PCI DSS only applies
+# when cardholder data is in scope), that is noted on the finding.
+# =============================================================================
+
+meta:
+  tool: "Vendor Software Assurance Scanner (VSAS)"
+  purpose: >
+    Static, read-only assurance testing of third-party / vendor software (binaries,
+    without source) as part of a Third-Party Risk Management (TPRM) programme.
+    Evidence is gathered by reading the artifact only; nothing is executed or attacked.
+  risk_method: "NIST SP 800-30 Rev. 1 (Guide for Conducting Risk Assessments)"
+  disclaimer: >
+    Automated results are indicators, not a certification. Every FAIL and every
+    MANUAL result must be reviewed by a qualified assessor before a risk decision.
+
+# -----------------------------------------------------------------------------
+# Frameworks referenced by the crosswalk. `jurisdiction` is stated plainly so the
+# US / EU / state-level distinction is never ambiguous.
+# -----------------------------------------------------------------------------
+frameworks:
+  nist_csf:
+    name: "NIST Cybersecurity Framework"
+    version: "2.0 (Feb 2024)"
+    jurisdiction: "US (voluntary, international use)"
+    source: "https://doi.org/10.6028/NIST.CSWP.29"
+  nist_80053:
+    name: "NIST SP 800-53 Security and Privacy Controls"
+    version: "Rev. 5"
+    jurisdiction: "US federal (widely adopted)"
+    source: "https://doi.org/10.6028/NIST.SP.800-53r5"
+  nist_800161:
+    name: "NIST SP 800-161 C-SCRM (supply chain)"
+    version: "Rev. 1"
+    jurisdiction: "US federal"
+    source: "https://doi.org/10.6028/NIST.SP.800-161r1"
+  gdpr:
+    name: "EU General Data Protection Regulation"
+    version: "Regulation (EU) 2016/679"
+    jurisdiction: "European Union"
+    source: "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+  hipaa:
+    name: "HIPAA Security Rule"
+    version: "45 CFR Part 164, Subpart C (in force)"
+    jurisdiction: "US (health)"
+    note: >
+      The Jan-2025 NPRM proposing major Security Rule changes is still PROPOSED,
+      not finalized (final penciled for ~2027 and may change). This crosswalk
+      cites the rule currently IN FORCE.
+    source: "https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-C"
+  soc2:
+    name: "AICPA Trust Services Criteria (SOC 2)"
+    version: "TSC 2017, revised 2022"
+    jurisdiction: "US (AICPA)"
+    source: "https://www.aicpa-cima.com/resources/landing/trust-services-criteria"
+  ccpa:
+    name: "CCPA as amended by CPRA"
+    version: "Cal. Civ. Code 1798.100 et seq. + CCR Title 11 regs"
+    jurisdiction: "US - California"
+    source: "https://oag.ca.gov/privacy/ccpa"
+  pci_dss:
+    name: "PCI DSS"
+    version: "4.0.1 (June 2024; v4 future-dated reqs in force since 31 Mar 2025)"
+    jurisdiction: "Global (card brands); applies only when cardholder data in scope"
+    source: "https://www.pcisecuritystandards.org/document_library/"
+  fedramp:
+    name: "FedRAMP (uses NIST SP 800-53 Rev.5 baselines)"
+    version: "Rev. 5 Moderate baseline referenced"
+    jurisdiction: "US federal cloud"
+    source: "https://www.fedramp.gov/"
+  cmmc:
+    name: "CMMC (DoD)"
+    version: "Program final rule 32 CFR (eff. 16 Dec 2024); 48 CFR/DFARS final (eff. 10 Nov 2025)"
+    jurisdiction: "US DoD supply chain; L2 maps to NIST SP 800-171 Rev.2"
+    source: "https://dodcio.defense.gov/CMMC/"
+  dora:
+    name: "Digital Operational Resilience Act"
+    version: "Regulation (EU) 2022/2554 (applies since 17 Jan 2025)"
+    jurisdiction: "European Union (financial entities + ICT third parties)"
+    source: "https://eur-lex.europa.eu/eli/reg/2022/2554/oj"
+  iso_27001:
+    name: "ISO/IEC 27001 Annex A"
+    version: "2022"
+    jurisdiction: "International"
+    source: "https://www.iso.org/standard/27001"
+
+# -----------------------------------------------------------------------------
+# NIST SP 800-30 risk scales. Likelihood x Impact -> overall risk (Appendix I).
+# -----------------------------------------------------------------------------
+risk_scales:
+  levels: ["Very Low", "Low", "Moderate", "High", "Very High"]
+  # 5x5 combination matrix, rows = likelihood, cols = impact, values = overall risk.
+  matrix:
+    Very High: ["Low",      "Moderate", "High",     "Very High", "Very High"]
+    High:      ["Low",      "Moderate", "High",     "High",      "Very High"]
+    Moderate:  ["Very Low", "Low",      "Moderate", "High",      "High"]
+    Low:       ["Very Low", "Low",      "Low",      "Moderate",  "Moderate"]
+    Very Low:  ["Very Low", "Very Low", "Low",      "Low",       "Low"]
+
+# -----------------------------------------------------------------------------
+# Finding types = automated control tests.
+# -----------------------------------------------------------------------------
+findings:
+
+  hardcoded-secret:
+    title: "Hardcoded credential, API key or token embedded in the binary"
+    severity: High
+    default_likelihood: High
+    default_impact: High
+    test_procedure: >
+      Extract printable strings and scan for credential patterns (cloud access keys,
+      bearer/JWT tokens, private-key headers, connection strings) and high-entropy
+      tokens adjacent to credential keywords.
+    pass_when: "No embedded secrets detected."
+    fail_when: "One or more embedded secrets or high-entropy credential-like tokens found."
+    remediation: >
+      Remove secrets from the artifact; load them at runtime from a secrets manager
+      or environment; rotate any exposed credential.
+    controls:
+      nist_csf: ["PR.AA-01", "PR.AA-05", "PR.DS-01"]
+      nist_80053: ["IA-5", "IA-5(7)", "SA-15"]
+      nist_800161: ["MA-SA-15 flow-down to suppliers"]
+      gdpr: ["Art. 32(1)"]
+      hipaa: ["164.312(a)(2)(i)", "164.312(d)", "164.308(a)(5)(ii)(D)"]
+      soc2: ["CC6.1", "CC6.6"]
+      ccpa: ["1798.100(e)", "1798.81.5"]
+      pci_dss: ["6.2.4", "8.3.1", "8.6.2"]
+      fedramp: ["IA-5 (Moderate)"]
+      cmmc: ["IA.L2-3.5.7", "IA.L2-3.5.8"]
+      dora: ["Art. 9(2)", "Art. 9(4)"]
+      iso_27001: ["A.5.17", "A.8.24"]
+
+  weak-crypto:
+    title: "Reference to weak or deprecated cryptographic algorithm"
+    severity: High
+    default_likelihood: Moderate
+    default_impact: High
+    test_procedure: >
+      Scan strings and imported symbols for deprecated primitives (MD5, SHA-1 for
+      signatures, DES/3DES, RC4) and insecure modes (ECB), and for known weak-crypto
+      library entry points.
+    pass_when: "Only modern algorithms/modes referenced (e.g. AES-GCM, SHA-256+)."
+    fail_when: "A deprecated algorithm or insecure mode is referenced."
+    remediation: >
+      Replace with current primitives (AES-256-GCM, SHA-256/512, RSA-3072/ECDSA-P256);
+      for FedRAMP/CMMC use FIPS 140-validated modules.
+    controls:
+      nist_csf: ["PR.DS-01", "PR.DS-02"]
+      nist_80053: ["SC-13", "SC-8", "SC-8(1)", "SC-28"]
+      nist_800161: ["SA-8 secure design flow-down"]
+      gdpr: ["Art. 32(1)(a)"]
+      hipaa: ["164.312(a)(2)(iv)", "164.312(e)(2)(ii)"]
+      soc2: ["CC6.1", "CC6.7"]
+      ccpa: ["1798.81.5", "1798.100(e)"]
+      pci_dss: ["4.2.1", "3.6.1", "3.7.1", "6.2.4"]
+      fedramp: ["SC-13 (Moderate)", "SC-8 (Moderate)"]
+      cmmc: ["SC.L2-3.13.8", "SC.L2-3.13.11"]
+      dora: ["Art. 9(2)"]
+      iso_27001: ["A.8.24"]
+
+  plaintext-transport:
+    title: "Data transmitted over a non-TLS (http://) channel"
+    severity: High
+    default_likelihood: High
+    default_impact: Moderate
+    test_procedure: >
+      Extract embedded URLs and flag any using http:// (or other cleartext protocols
+      such as ftp://, telnet://) for data exchange.
+    pass_when: "All embedded endpoints use TLS (https://) or no network endpoints present."
+    fail_when: "A cleartext endpoint used for data exchange is present."
+    remediation: "Enforce TLS 1.2+ for all endpoints; disable cleartext fallbacks; pin where feasible."
+    controls:
+      nist_csf: ["PR.DS-02"]
+      nist_80053: ["SC-8", "SC-8(1)", "SC-23"]
+      nist_800161: ["SA-9 external services"]
+      gdpr: ["Art. 32(1)"]
+      hipaa: ["164.312(e)(1)", "164.312(e)(2)(ii)"]
+      soc2: ["CC6.7"]
+      ccpa: ["1798.81.5"]
+      pci_dss: ["4.2.1"]
+      fedramp: ["SC-8 (Moderate)"]
+      cmmc: ["SC.L2-3.13.8"]
+      dora: ["Art. 9(2)"]
+      iso_27001: ["A.8.24", "A.5.14"]
+
+  personal-data-marker:
+    title: "Markers suggesting personal or special-category data handling"
+    severity: Medium
+    default_likelihood: Moderate
+    default_impact: High
+    applicability: "Privacy frameworks apply when personal data is processed."
+    test_procedure: >
+      Scan strings for field names / schema markers indicating personal data (email,
+      ssn, dob, address) and special-category / health data (patient, diagnosis, phi).
+      Values are not assessed; presence triggers a privacy data-flow review.
+    pass_when: "No personal-data markers, or data handling documented and lawful."
+    fail_when: "Personal / special-category markers present without documented basis."
+    remediation: >
+      Map the data flow; confirm lawful basis (GDPR Art. 6/9), minimisation and
+      retention; apply masking/de-identification where possible.
+    controls:
+      nist_csf: ["ID.AM-07", "PR.DS-01"]
+      nist_80053: ["PT-2", "PT-3", "PM-5"]
+      nist_800161: ["-"]
+      gdpr: ["Art. 5", "Art. 6", "Art. 9", "Art. 25", "Art. 30"]
+      hipaa: ["164.502", "164.514", "164.306"]
+      soc2: ["P3.1", "P4.1", "C1.1"]
+      ccpa: ["1798.100", "1798.140(ae) sensitive PI", "1798.140(v)"]
+      pci_dss: ["3.2.1", "3.3", "3.4 (only if PAN present)"]
+      fedramp: ["PT-3", "PT-2"]
+      cmmc: ["MP.L2-3.8.x (if CUI)"]
+      dora: ["Art. 8", "Art. 9(3)"]
+      iso_27001: ["A.5.12", "A.5.34", "A.8.11"]
+
+  data-egress-endpoint:
+    title: "Embedded external endpoint (data-flow / international-transfer review)"
+    severity: Medium
+    default_likelihood: Moderate
+    default_impact: Moderate
+    test_procedure: >
+      Inventory embedded hostnames, domains and hardcoded IPs the software contacts,
+      to feed supplier data-flow mapping and (for EU data) transfer assessment.
+    pass_when: "All endpoints are known, documented and within approved locations."
+    fail_when: "Undocumented endpoints, or endpoints implying transfer to a third country without a safeguard."
+    remediation: >
+      Document each endpoint and its purpose; for EU personal data confirm a Chapter V
+      transfer mechanism (adequacy / SCCs); restrict to an allow-list.
+    controls:
+      nist_csf: ["ID.AM-04", "GV.SC-07", "DE.CM-06"]
+      nist_80053: ["SA-9", "CA-3", "SR-3"]
+      nist_800161: ["SR-3 supply-chain controls", "SA-9"]
+      gdpr: ["Art. 28", "Art. 30", "Art. 44", "Art. 46", "Art. 49"]
+      hipaa: ["164.308(b)(1)", "164.314(a)"]
+      soc2: ["CC9.2", "CC3.2"]
+      ccpa: ["1798.140(ag) service provider", "1798.140(j) contractor"]
+      pci_dss: ["12.8", "12.8.1", "12.8.5"]
+      fedramp: ["SA-9", "CA-3"]
+      cmmc: ["SA-9 flow-down"]
+      dora: ["Art. 28", "Art. 29", "Art. 30"]
+      iso_27001: ["A.5.19", "A.5.20", "A.5.14"]
+
+  outdated-component:
+    title: "Bundled third-party component is outdated / end-of-life"
+    severity: High
+    default_likelihood: High
+    default_impact: High
+    test_procedure: >
+      Identify bundled libraries and versions from version strings and imports; build an
+      SBOM; flag versions that are end-of-life or below the vendor's current support line.
+    pass_when: "All components are supported and within the patch window."
+    fail_when: "An end-of-life or known-outdated component is bundled."
+    remediation: "Upgrade to a supported release; subscribe to the component's advisories; track in SBOM."
+    controls:
+      nist_csf: ["ID.AM-02", "ID.RA-01", "GV.SC-04"]
+      nist_80053: ["CM-8", "RA-5", "SA-22", "SR-3", "SR-4"]
+      nist_800161: ["Provenance & component inventory", "SR-4"]
+      gdpr: ["Art. 32(1)"]
+      hipaa: ["164.308(a)(1)(ii)(A)", "164.308(a)(8)"]
+      soc2: ["CC7.1", "CC3.2"]
+      ccpa: ["1798.81.5"]
+      pci_dss: ["6.3.1", "6.3.2", "6.3.3", "12.3.4"]
+      fedramp: ["RA-5 (Moderate)", "CM-8", "SA-22"]
+      cmmc: ["RA.L2-3.11.2", "SI.L2-3.14.1"]
+      dora: ["Art. 8", "Art. 9(4)"]
+      iso_27001: ["A.8.8", "A.5.9", "A.8.32"]
+
+  missing-hardening:
+    title: "Binary built without exploit-mitigation hardening"
+    severity: Medium
+    default_likelihood: Moderate
+    default_impact: Moderate
+    test_procedure: >
+      Inspect binary metadata for exploit mitigations: NX/DEP, position-independent
+      executable (PIE/ASLR), RELRO, stack canaries (and, on PE, ASLR/DEP/CFG flags).
+    pass_when: "Expected mitigations for the platform are enabled."
+    fail_when: "One or more standard mitigations are disabled."
+    remediation: >
+      Rebuild with hardening: -fstack-protector-strong, PIE, full RELRO (GNU);
+      /DYNAMICBASE /NXCOMPAT /GUARD:CF (MSVC).
+    controls:
+      nist_csf: ["PR.PS-01"]
+      nist_80053: ["SI-16", "CM-6", "SA-11", "SA-15"]
+      nist_800161: ["SA-15 dev process flow-down"]
+      gdpr: ["Art. 25", "Art. 32(1)"]
+      hipaa: ["164.312(c)(1)"]
+      soc2: ["CC7.1", "CC8.1", "CC6.8"]
+      ccpa: ["1798.81.5"]
+      pci_dss: ["6.2.4", "2.2"]
+      fedramp: ["SI-16 (Moderate)", "CM-6"]
+      cmmc: ["CM.L2-3.4.1", "SI.L2-3.14.1"]
+      dora: ["Art. 9(4)"]
+      iso_27001: ["A.8.27", "A.8.28", "A.8.9"]
+
+  unsigned-binary:
+    title: "Binary is not code-signed / integrity cannot be verified"
+    severity: Medium
+    default_likelihood: Moderate
+    default_impact: Moderate
+    test_procedure: >
+      Check for a code signature (Authenticode on PE; signed sections / accompanying
+      signature on ELF). Absence means supply-chain integrity cannot be verified.
+    pass_when: "A valid code signature / integrity mechanism is present."
+    fail_when: "No signature; integrity and origin cannot be verified."
+    remediation: "Sign releases; publish checksums/signatures; verify on install (SI-7)."
+    controls:
+      nist_csf: ["PR.DS-06"]
+      nist_80053: ["SI-7", "SI-7(1)", "CM-14"]
+      nist_800161: ["SR-11 component authenticity"]
+      gdpr: ["Art. 5(1)(f)", "Art. 32(1)"]
+      hipaa: ["164.312(c)(1)", "164.312(c)(2)"]
+      soc2: ["CC6.8", "CC7.1"]
+      ccpa: ["1798.81.5"]
+      pci_dss: ["6.3.2", "11.5"]
+      fedramp: ["SI-7 (Moderate)", "CM-14"]
+      cmmc: ["SI.L2-3.14.1"]
+      dora: ["Art. 9(4)"]
+      iso_27001: ["A.8.19", "A.8.28"]
+
+  attestation-gap:
+    title: "Vendor self-attestation contradicted by evidence in the binary"
+    severity: High
+    default_likelihood: High
+    default_impact: High
+    test_procedure: >
+      Compare the vendor's security-questionnaire answers against scanner findings
+      (e.g. vendor claims 'all traffic encrypted' but a http:// endpoint is present).
+    pass_when: "Evidence is consistent with every material attestation."
+    fail_when: "Evidence contradicts an attestation (a due-diligence red flag)."
+    remediation: >
+      Raise with the vendor for correction; reflect in the risk rating and contract;
+      require remediation evidence before approval.
+    controls:
+      nist_csf: ["GV.SC-06", "GV.SC-07", "GV.SC-04"]
+      nist_80053: ["SR-6", "SR-3", "SA-9(3)"]
+      nist_800161: ["Supplier assessment & review"]
+      gdpr: ["Art. 24", "Art. 28(1)", "Art. 28(3)(h)"]
+      hipaa: ["164.308(b)(1)", "164.314(a)"]
+      soc2: ["CC9.2", "CC3.2"]
+      ccpa: ["1798.140(ag)", "CCR 7051 due diligence"]
+      pci_dss: ["12.8.4", "12.8.5"]
+      fedramp: ["SR-6", "SA-9"]
+      cmmc: ["flow-down SR; C3PAO assessment"]
+      dora: ["Art. 28(4)", "Art. 29", "Art. 30"]
+      iso_27001: ["A.5.19", "A.5.20", "A.5.22"]

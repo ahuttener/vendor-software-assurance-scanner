@@ -1,0 +1,5 @@
+# Vendor Software Assurance Scanner (VSAS) runtime dependencies.
+# Kept deliberately small: three pure-Python libraries, all permissively licensed.
+pefile>=2024.8.26      # parse Windows PE (.exe/.dll) headers and sections
+pyelftools>=0.31       # parse Linux ELF headers, sections, dynamic symbols
+PyYAML>=6.0            # load the control crosswalk, vendor attestation and answer key

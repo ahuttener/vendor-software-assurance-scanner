@@ -1,0 +1,13 @@
+# Expected control-test results for the VULNERABLE fixture (samples/bin/demo_vendor_app).
+# `vsas --self-test <artifact> --answer-key this-file` proves the detectors catch
+# exactly what they should (no silent regressions).
+artifact: demo_vendor_app
+expected:
+  hardcoded-secret: FAIL
+  weak-crypto: FAIL
+  plaintext-transport: FAIL
+  data-egress-endpoint: MANUAL
+  personal-data-marker: MANUAL
+  outdated-component: FAIL
+  missing-hardening: FAIL
+  unsigned-binary: FAIL

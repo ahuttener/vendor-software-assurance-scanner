@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# VSAS build & output artifacts
+samples/bin/
+vsas-report/
+vsas-out*/
+*.png.tmp
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store

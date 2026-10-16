@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VSAS compliance report — demo_vendor_app</title>
+<style>
+:root{
+  --bg:#f6f8fb; --card:#ffffff; --ink:#0f1b2d; --muted:#5b6b82; --line:#e3e9f2;
+  --navy:#0b2447; --teal:#1f8a8a;
+  --ok:#188038; --warn:#c77700; --bad:#c5221f;
+  --r-vh:#7a0010; --r-h:#c5221f; --r-m:#c77700; --r-l:#1a73e8; --r-vl:#188038; --r-na:#8a97a8;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0c1118; --card:#131b26; --ink:#e8eef6; --muted:#9bb0c7; --line:#223042;
+    --navy:#9fc0ff; --teal:#5fd0d0;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:28px 16px 72px}
+header.top{background:linear-gradient(135deg,var(--navy),#123a63);color:#fff;border-radius:14px;
+  padding:24px 26px;margin-bottom:22px}
+:root:not([data-theme="light"]) header.top{color:#fff}
+header.top h1{margin:0 0 4px;font-size:22px;letter-spacing:.2px}
+header.top .sub{opacity:.85;font-size:13px}
+.meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:14px;font-size:12.5px;opacity:.95}
+.meta code{background:rgba(255,255,255,.14);padding:1px 6px;border-radius:5px;color:#fff;word-break:break-all}
+.verdict{display:inline-block;margin-top:14px;padding:8px 14px;border-radius:9px;font-weight:600;font-size:14px}
+.v-bad{background:#fdecea;color:#7a0010}.v-warn{background:#fff4e0;color:#8a5200}.v-ok{background:#e6f4ea;color:#0f5126}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:0 0 16px}
+h2{font-size:16px;margin:2px 0 14px;color:var(--navy)}
+h2 .n{color:var(--muted);font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px}
+.stat b{display:block;font-size:22px}.stat span{font-size:12px;color:var(--muted)}
+.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:600;color:#fff}
+.ok{background:var(--ok)}.warn{background:var(--warn)}.bad{background:var(--bad)}
+.r-vh{background:var(--r-vh)}.r-h{background:var(--r-h)}.r-m{background:var(--r-m)}
+.r-l{background:var(--r-l)}.r-vl{background:var(--r-vl)}.r-na{background:var(--r-na)}
+.finding{border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin-bottom:12px}
+.finding .hd{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.finding .hd h3{font-size:14.5px;margin:0;flex:1 1 60%}
+.detail{color:var(--ink);margin:2px 0 8px}
+.ev{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:8px 0;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;overflow-x:auto}
+.ev div{white-space:pre-wrap;word-break:break-all}.ev .off{color:var(--muted)}
+.rem{font-size:13px;color:var(--muted);margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.ctrls{font-size:12px;margin-top:8px}
+.ctrls div{padding:2px 0}.ctrls b{color:var(--teal);display:inline-block;min-width:150px}
+.foot{color:var(--muted);font-size:12px;margin-top:18px}
+.foot a{color:var(--teal)}
+.pill{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+</style></head>
+<body><div class="wrap">
+  <header class="top">
+    <h1>Vendor Software Assurance — Compliance Report</h1>
+    <div class="sub">Static third-party software assessment · read-only · evidence-based</div>
+    <div class="meta">
+      <span>Artifact: <code>demo_vendor_app</code></span>
+      <span>Format: <code>elf</code></span>
+      <span>SHA-256: <code>8c0beee730f7f48be2ca192e93eb4b26dd865b2ed4ca452b46b4c6c364d8cbad</code></span>
+      <span>Generated: <code>2026-10-16T12:31:27+00:00</code></span>
+    </div>
+    <div class="verdict v-bad">Recommendation: Reject — remediate before approval</div>
+  </header>
+
+  <div class="card">
+    <h2>Executive summary</h2>
+    <div class="grid"><div class="stat"><b>11</b><span>Fail</span></div><div class="stat"><b>2</b><span>Manual review</span></div><div class="stat"><b>0</b><span>Pass</span></div>
+      <div class="stat"><b>High</b><span>Highest open risk</span></div>
+    </div>
+    <p style="margin:14px 0 0;color:var(--muted)">11 control test(s) failed and 2 require manual review; 0 passed. Highest open risk: High. Key issues: Hardcoded credential, API key or token embedded in the binary; Reference to weak or deprecated cryptographic algorithm; Data transmitted over a non-TLS (cleartext) channel.</p>
+  </div>
+
+  
+        <div class="card">
+          <h2>Vendor attestation reconciliation <span class="n">— ExampleVendor Ltd. (fictitious)</span></h2>
+          <table><tr><th>Claim</th><th>Self-attested</th></tr><tr><td><code>encryption_in_transit</code></td><td>True</td></tr><tr><td><code>no_hardcoded_secrets</code></td><td>True</td></tr><tr><td><code>strong_cryptography_only</code></td><td>True</td></tr><tr><td><code>code_signed</code></td><td>True</td></tr><tr><td><code>processes_personal_data</code></td><td>False</td></tr><tr><td><code>sbom_provided</code></td><td>False</td></tr><tr><td><code>data_locations</code></td><td>[&#x27;EU&#x27;]</td></tr></table>
+          <p style="margin:12px 0 4px"><b>Contradictions found (5):</b></p>
+          <ul style="margin-top:4px"><li>Vendor attests encryption in transit, but a cleartext (non-TLS) endpoint was found.</li><li>Vendor attests no hardcoded secrets, but embedded credentials were found.</li><li>Vendor attests strong cryptography only, but a deprecated algorithm was referenced.</li><li>Vendor attests the release is code-signed, but no signature could be verified.</li><li>Vendor attests no personal data is processed, but personal/health markers were found.</li></ul>
+        </div>
+
+  <div class="card">
+    <h2>Control-test findings <span class="n">— 13 open, 0 passed</span></h2>
+    
+    <div class="finding">
+      <div class="hd">
+        <h3>Hardcoded credential, API key or token embedded in the binary</h3>
+        <span class="badge bad">FAIL</span>
+        <span class="badge r-h">Risk: High</span>
+        <span class="pill">High</span>
+      </div>
+      <div class="detail">2 embedded secret(s) / credential-like token(s) found.</div>
+      <div class="ev"><div>AKIAIOSFODNN7EXAMPLE<span class="off"> @0x2008</span> <span class="off">[AWS access key ID]</span></div><div>wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY<span class="off"> @0x2020</span> <span class="off">[high-entropy token (H=4.66)]</span></div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> PR.AA-01, PR.AA-05, PR.DS-01</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> IA-5, IA-5(7), SA-15</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> MA-SA-15 flow-down to suppliers</div><div><b>EU General Data Protection Regulation</b> Art. 32(1)</div><div><b>HIPAA Security Rule</b> 164.312(a)(2)(i), 164.312(d), 164.308(a)(5)(ii)(D)</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> CC6.1, CC6.6</div><div><b>CCPA as amended by CPRA</b> 1798.100(e), 1798.81.5</div><div><b>PCI DSS</b> 6.2.4, 8.3.1, 8.6.2</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> IA-5 (Moderate)</div><div><b>CMMC (DoD)</b> IA.L2-3.5.7, IA.L2-3.5.8</div><div><b>Digital Operational Resilience Act</b> Art. 9(2), Art. 9(4)</div><div><b>ISO/IEC 27001 Annex A</b> A.5.17, A.8.24</div></div>
+      <div class="rem"><b>Remediation:</b> Remove secrets from the artifact; load them at runtime from a secrets manager or environment; rotate any exposed credential.
+</div>
+    </div>
+    <div class="finding">
+      <div class="hd">
+        <h3>Reference to weak or deprecated cryptographic algorithm</h3>
+        <span class="badge bad">FAIL</span>
+        <span class="badge r-h">Risk: High</span>
+        <span class="pill">High</span>
+      </div>
+      <div class="detail">Deprecated cryptographic primitive(s) referenced.</div>
+      <div class="ev"><div>checksum algorithm = MD5 (legacy)<span class="off"> @0x2080</span> <span class="off">[MD5: MD5 is collision-broken; unfit for integrity/signatures]</span></div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> PR.DS-01, PR.DS-02</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> SC-13, SC-8, SC-8(1), SC-28</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> SA-8 secure design flow-down</div><div><b>EU General Data Protection Regulation</b> Art. 32(1)(a)</div><div><b>HIPAA Security Rule</b> 164.312(a)(2)(iv), 164.312(e)(2)(ii)</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> CC6.1, CC6.7</div><div><b>CCPA as amended by CPRA</b> 1798.81.5, 1798.100(e)</div><div><b>PCI DSS</b> 4.2.1, 3.6.1, 3.7.1, 6.2.4</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> SC-13 (Moderate), SC-8 (Moderate)</div><div><b>CMMC (DoD)</b> SC.L2-3.13.8, SC.L2-3.13.11</div><div><b>Digital Operational Resilience Act</b> Art. 9(2)</div><div><b>ISO/IEC 27001 Annex A</b> A.8.24</div></div>
+      <div class="rem"><b>Remediation:</b> Replace with current primitives (AES-256-GCM, SHA-256/512, RSA-3072/ECDSA-P256); for FedRAMP/CMMC use FIPS 140-validated modules.
+</div>
+    </div>
+    <div class="finding">
+      <div class="hd">
+        <h3>Data transmitted over a non-TLS (cleartext) channel</h3>
+        <span class="badge bad">FAIL</span>
+        <span class="badge r-h">Risk: High</span>
+        <span class="pill">High</span>
+      </div>
+      <div class="detail">1 cleartext endpoint(s) embedded.</div>
+      <div class="ev"><div>http://updates.example-vendor.test/config.json<span class="off"> @0x2050</span></div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> PR.DS-02</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> SC-8, SC-8(1), SC-23</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> SA-9 external services</div><div><b>EU General Data Protection Regulation</b> Art. 32(1)</div><div><b>HIPAA Security Rule</b> 164.312(e)(1), 164.312(e)(2)(ii)</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> CC6.7</div><div><b>CCPA as amended by CPRA</b> 1798.81.5</div><div><b>PCI DSS</b> 4.2.1</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> SC-8 (Moderate)</div><div><b>CMMC (DoD)</b> SC.L2-3.13.8</div><div><b>Digital Operational Resilience Act</b> Art. 9(2)</div><div><b>ISO/IEC 27001 Annex A</b> A.8.24, A.5.14</div></div>
+      <div class="rem"><b>Remediation:</b> Enforce TLS 1.2+ for all endpoints; disable cleartext fallbacks; pin where feasible.</div>
+    </div>
+    <div class="finding">
+      <div class="hd">
+        <h3>Markers suggesting personal / special-category data handling</h3>
+        <span class="badge warn">MANUAL</span>
+        <span class="badge r-h">Risk: High</span>
+        <span class="pill">High</span>
+      </div>
+      <div class="detail">Includes SPECIAL-CATEGORY (health) markers: GDPR Art. 9 and HIPAA apply.</div>
+      <div class="ev"><div>patient_id=TEST-0001;dob=1900-01-01;ssn=000-00-0000;note=SYNTHETIC-TEST-RECORD<span class="off"> @0x20a8</span> <span class="off">[SSN (US Social Security Number)]</span></div><div>patient_id=TEST-0001;dob=1900-01-01;ssn=000-00-0000;note=SYNTHETIC-TEST-RECORD<span class="off"> @0x20a8</span> <span class="off">[Date of birth]</span></div><div>patient_id=TEST-0001;dob=1900-01-01;ssn=000-00-0000;note=SYNTHETIC-TEST-RECORD<span class="off"> @0x20a8</span> <span class="off">[Patient identifier (health)]</span></div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> ID.AM-07, PR.DS-01</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> PT-2, PT-3, PM-5</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> -</div><div><b>EU General Data Protection Regulation</b> Art. 5, Art. 6, Art. 9, Art. 25, Art. 30</div><div><b>HIPAA Security Rule</b> 164.502, 164.514, 164.306</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> P3.1, P4.1, C1.1</div><div><b>CCPA as amended by CPRA</b> 1798.100, 1798.140(ae) sensitive PI, 1798.140(v)</div><div><b>PCI DSS</b> 3.2.1, 3.3, 3.4 (only if PAN present)</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> PT-3, PT-2</div><div><b>CMMC (DoD)</b> MP.L2-3.8.x (if CUI)</div><div><b>Digital Operational Resilience Act</b> Art. 8, Art. 9(3)</div><div><b>ISO/IEC 27001 Annex A</b> A.5.12, A.5.34, A.8.11</div></div>
+      <div class="rem"><b>Remediation:</b> Map the data flow; confirm lawful basis (GDPR Art. 6/9), minimisation and retention; apply masking/de-identification where possible.
+</div>
+    </div>
+    <div class="finding">
+      <div class="hd">
+        <h3>Bundled third-party component is outdated / end-of-life</h3>
+        <span class="badge bad">FAIL</span>
+        <span class="badge r-h">Risk: High</span>
+        <span class="pill">High</span>
+      </div>
+      <div class="detail">1 outdated/EOL component(s) identified.</div>
+      <div class="ev"><div>OpenSSL 1.0.1<span class="off"> @0x20f8</span> <span class="off">[OpenSSL &lt; 3.0 is end-of-life (1.0.x/1.1.x no longer receive security fixes)]</span></div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> ID.AM-02, ID.RA-01, GV.SC-04</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> CM-8, RA-5, SA-22, SR-3, SR-4</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> Provenance &amp; component inventory, SR-4</div><div><b>EU General Data Protection Regulation</b> Art. 32(1)</div><div><b>HIPAA Security Rule</b> 164.308(a)(1)(ii)(A), 164.308(a)(8)</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> CC7.1, CC3.2</div><div><b>CCPA as amended by CPRA</b> 1798.81.5</div><div><b>PCI DSS</b> 6.3.1, 6.3.2, 6.3.3, 12.3.4</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> RA-5 (Moderate), CM-8, SA-22</div><div><b>CMMC (DoD)</b> RA.L2-3.11.2, SI.L2-3.14.1</div><div><b>Digital Operational Resilience Act</b> Art. 8, Art. 9(4)</div><div><b>ISO/IEC 27001 Annex A</b> A.8.8, A.5.9, A.8.32</div></div>
+      <div class="rem"><b>Remediation:</b> Upgrade to a supported release; subscribe to the component&#x27;s advisories; track in SBOM.</div>
+    </div>
+    <div class="finding">
+      <div class="hd">
+        <h3>Vendor attestation contradicted by evidence</h3>
+        <span class="badge bad">FAIL</span>
+        <span class="badge r-h">Risk: High</span>
+        <span class="pill">High</span>
+      </div>
+      <div class="detail">Vendor attests encryption in transit, but a cleartext (non-TLS) endpoint was found.</div>
+      <div class="ev"><div>encryption_in_transit = True <span class="off">[self-attested; contradicted]</span></div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> GV.SC-06, GV.SC-07, GV.SC-04</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> SR-6, SR-3, SA-9(3)</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> Supplier assessment &amp; review</div><div><b>EU General Data Protection Regulation</b> Art. 24, Art. 28(1), Art. 28(3)(h)</div><div><b>HIPAA Security Rule</b> 164.308(b)(1), 164.314(a)</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> CC9.2, CC3.2</div><div><b>CCPA as amended by CPRA</b> 1798.140(ag), CCR 7051 due diligence</div><div><b>PCI DSS</b> 12.8.4, 12.8.5</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> SR-6, SA-9</div><div><b>CMMC (DoD)</b> flow-down SR; C3PAO assessment</div><div><b>Digital Operational Resilience Act</b> Art. 28(4), Art. 29, Art. 30</div><div><b>ISO/IEC 27001 Annex A</b> A.5.19, A.5.20, A.5.22</div></div>
+      <div class="rem"><b>Remediation:</b> Raise with the vendor for correction; reflect in the risk rating and contract; require remediation evidence before approval.
+</div>
+    </div>
+    <div class="finding">
+      <div class="hd">
+        <h3>Vendor attestation contradicted by evidence</h3>
+        <span class="badge bad">FAIL</span>
+        <span class="badge r-h">Risk: High</span>
+        <span class="pill">High</span>
+      </div>
+      <div class="detail">Vendor attests no hardcoded secrets, but embedded credentials were found.</div>
+      <div class="ev"><div>no_hardcoded_secrets = True <span class="off">[self-attested; contradicted]</span></div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> GV.SC-06, GV.SC-07, GV.SC-04</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> SR-6, SR-3, SA-9(3)</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> Supplier assessment &amp; review</div><div><b>EU General Data Protection Regulation</b> Art. 24, Art. 28(1), Art. 28(3)(h)</div><div><b>HIPAA Security Rule</b> 164.308(b)(1), 164.314(a)</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> CC9.2, CC3.2</div><div><b>CCPA as amended by CPRA</b> 1798.140(ag), CCR 7051 due diligence</div><div><b>PCI DSS</b> 12.8.4, 12.8.5</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> SR-6, SA-9</div><div><b>CMMC (DoD)</b> flow-down SR; C3PAO assessment</div><div><b>Digital Operational Resilience Act</b> Art. 28(4), Art. 29, Art. 30</div><div><b>ISO/IEC 27001 Annex A</b> A.5.19, A.5.20, A.5.22</div></div>
+      <div class="rem"><b>Remediation:</b> Raise with the vendor for correction; reflect in the risk rating and contract; require remediation evidence before approval.
+</div>
+    </div>
+    <div class="finding">
+      <div class="hd">
+        <h3>Vendor attestation contradicted by evidence</h3>
+        <span class="badge bad">FAIL</span>
+        <span class="badge r-h">Risk: High</span>
+        <span class="pill">High</span>
+      </div>
+      <div class="detail">Vendor attests strong cryptography only, but a deprecated algorithm was referenced.</div>
+      <div class="ev"><div>strong_cryptography_only = True <span class="off">[self-attested; contradicted]</span></div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> GV.SC-06, GV.SC-07, GV.SC-04</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> SR-6, SR-3, SA-9(3)</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> Supplier assessment &amp; review</div><div><b>EU General Data Protection Regulation</b> Art. 24, Art. 28(1), Art. 28(3)(h)</div><div><b>HIPAA Security Rule</b> 164.308(b)(1), 164.314(a)</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> CC9.2, CC3.2</div><div><b>CCPA as amended by CPRA</b> 1798.140(ag), CCR 7051 due diligence</div><div><b>PCI DSS</b> 12.8.4, 12.8.5</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> SR-6, SA-9</div><div><b>CMMC (DoD)</b> flow-down SR; C3PAO assessment</div><div><b>Digital Operational Resilience Act</b> Art. 28(4), Art. 29, Art. 30</div><div><b>ISO/IEC 27001 Annex A</b> A.5.19, A.5.20, A.5.22</div></div>
+      <div class="rem"><b>Remediation:</b> Raise with the vendor for correction; reflect in the risk rating and contract; require remediation evidence before approval.
+</div>
+    </div>
+    <div class="finding">
+      <div class="hd">
+        <h3>Vendor attestation contradicted by evidence</h3>
+        <span class="badge bad">FAIL</span>
+        <span class="badge r-h">Risk: High</span>
+        <span class="pill">High</span>
+      </div>
+      <div class="detail">Vendor attests the release is code-signed, but no signature could be verified.</div>
+      <div class="ev"><div>code_signed = True <span class="off">[self-attested; contradicted]</span></div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> GV.SC-06, GV.SC-07, GV.SC-04</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> SR-6, SR-3, SA-9(3)</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> Supplier assessment &amp; review</div><div><b>EU General Data Protection Regulation</b> Art. 24, Art. 28(1), Art. 28(3)(h)</div><div><b>HIPAA Security Rule</b> 164.308(b)(1), 164.314(a)</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> CC9.2, CC3.2</div><div><b>CCPA as amended by CPRA</b> 1798.140(ag), CCR 7051 due diligence</div><div><b>PCI DSS</b> 12.8.4, 12.8.5</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> SR-6, SA-9</div><div><b>CMMC (DoD)</b> flow-down SR; C3PAO assessment</div><div><b>Digital Operational Resilience Act</b> Art. 28(4), Art. 29, Art. 30</div><div><b>ISO/IEC 27001 Annex A</b> A.5.19, A.5.20, A.5.22</div></div>
+      <div class="rem"><b>Remediation:</b> Raise with the vendor for correction; reflect in the risk rating and contract; require remediation evidence before approval.
+</div>
+    </div>
+    <div class="finding">
+      <div class="hd">
+        <h3>Vendor attestation contradicted by evidence</h3>
+        <span class="badge bad">FAIL</span>
+        <span class="badge r-h">Risk: High</span>
+        <span class="pill">High</span>
+      </div>
+      <div class="detail">Vendor attests no personal data is processed, but personal/health markers were found.</div>
+      <div class="ev"><div>processes_personal_data = False <span class="off">[self-attested; contradicted]</span></div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> GV.SC-06, GV.SC-07, GV.SC-04</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> SR-6, SR-3, SA-9(3)</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> Supplier assessment &amp; review</div><div><b>EU General Data Protection Regulation</b> Art. 24, Art. 28(1), Art. 28(3)(h)</div><div><b>HIPAA Security Rule</b> 164.308(b)(1), 164.314(a)</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> CC9.2, CC3.2</div><div><b>CCPA as amended by CPRA</b> 1798.140(ag), CCR 7051 due diligence</div><div><b>PCI DSS</b> 12.8.4, 12.8.5</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> SR-6, SA-9</div><div><b>CMMC (DoD)</b> flow-down SR; C3PAO assessment</div><div><b>Digital Operational Resilience Act</b> Art. 28(4), Art. 29, Art. 30</div><div><b>ISO/IEC 27001 Annex A</b> A.5.19, A.5.20, A.5.22</div></div>
+      <div class="rem"><b>Remediation:</b> Raise with the vendor for correction; reflect in the risk rating and contract; require remediation evidence before approval.
+</div>
+    </div>
+    <div class="finding">
+      <div class="hd">
+        <h3>Embedded external endpoints (data-flow / transfer review required)</h3>
+        <span class="badge warn">MANUAL</span>
+        <span class="badge r-m">Risk: Moderate</span>
+        <span class="pill">Medium</span>
+      </div>
+      <div class="detail">1 endpoint host(s) found; confirm purpose and data-transfer basis.</div>
+      <div class="ev"><div>updates.example-vendor.test</div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> ID.AM-04, GV.SC-07, DE.CM-06</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> SA-9, CA-3, SR-3</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> SR-3 supply-chain controls, SA-9</div><div><b>EU General Data Protection Regulation</b> Art. 28, Art. 30, Art. 44, Art. 46, Art. 49</div><div><b>HIPAA Security Rule</b> 164.308(b)(1), 164.314(a)</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> CC9.2, CC3.2</div><div><b>CCPA as amended by CPRA</b> 1798.140(ag) service provider, 1798.140(j) contractor</div><div><b>PCI DSS</b> 12.8, 12.8.1, 12.8.5</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> SA-9, CA-3</div><div><b>CMMC (DoD)</b> SA-9 flow-down</div><div><b>Digital Operational Resilience Act</b> Art. 28, Art. 29, Art. 30</div><div><b>ISO/IEC 27001 Annex A</b> A.5.19, A.5.20, A.5.14</div></div>
+      <div class="rem"><b>Remediation:</b> Document each endpoint and its purpose; for EU personal data confirm a Chapter V transfer mechanism (adequacy / SCCs); restrict to an allow-list.
+</div>
+    </div>
+    <div class="finding">
+      <div class="hd">
+        <h3>Binary built without exploit-mitigation hardening</h3>
+        <span class="badge bad">FAIL</span>
+        <span class="badge r-m">Risk: Moderate</span>
+        <span class="pill">Medium</span>
+      </div>
+      <div class="detail">Missing mitigations: PIE/ASLR (binary is a non-PIE executable); full RELRO (current: none); stack canary (-fstack-protector)</div>
+      <div class="ev"><div>PIE/ASLR (binary is a non-PIE executable)</div><div>full RELRO (current: none)</div><div>stack canary (-fstack-protector)</div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> PR.PS-01</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> SI-16, CM-6, SA-11, SA-15</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> SA-15 dev process flow-down</div><div><b>EU General Data Protection Regulation</b> Art. 25, Art. 32(1)</div><div><b>HIPAA Security Rule</b> 164.312(c)(1)</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> CC7.1, CC8.1, CC6.8</div><div><b>CCPA as amended by CPRA</b> 1798.81.5</div><div><b>PCI DSS</b> 6.2.4, 2.2</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> SI-16 (Moderate), CM-6</div><div><b>CMMC (DoD)</b> CM.L2-3.4.1, SI.L2-3.14.1</div><div><b>Digital Operational Resilience Act</b> Art. 9(4)</div><div><b>ISO/IEC 27001 Annex A</b> A.8.27, A.8.28, A.8.9</div></div>
+      <div class="rem"><b>Remediation:</b> Rebuild with hardening: -fstack-protector-strong, PIE, full RELRO (GNU); /DYNAMICBASE /NXCOMPAT /GUARD:CF (MSVC).
+</div>
+    </div>
+    <div class="finding">
+      <div class="hd">
+        <h3>Artifact is not code-signed / integrity cannot be verified</h3>
+        <span class="badge bad">FAIL</span>
+        <span class="badge r-m">Risk: Moderate</span>
+        <span class="pill">Medium</span>
+      </div>
+      <div class="detail">ELF integrity is typically provided by package/repo signatures, not embedded. Request a signed release and published checksums.</div>
+      <div class="ev"><div>no signature present</div></div>
+      <div class="ctrls"><div><b>NIST Cybersecurity Framework</b> PR.DS-06</div><div><b>NIST SP 800-53 Security and Privacy Controls</b> SI-7, SI-7(1), CM-14</div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> SR-11 component authenticity</div><div><b>EU General Data Protection Regulation</b> Art. 5(1)(f), Art. 32(1)</div><div><b>HIPAA Security Rule</b> 164.312(c)(1), 164.312(c)(2)</div><div><b>AICPA Trust Services Criteria (SOC 2)</b> CC6.8, CC7.1</div><div><b>CCPA as amended by CPRA</b> 1798.81.5</div><div><b>PCI DSS</b> 6.3.2, 11.5</div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> SI-7 (Moderate), CM-14</div><div><b>CMMC (DoD)</b> SI.L2-3.14.1</div><div><b>Digital Operational Resilience Act</b> Art. 9(4)</div><div><b>ISO/IEC 27001 Annex A</b> A.8.19, A.8.28</div></div>
+      <div class="rem"><b>Remediation:</b> Sign releases; publish checksums/signatures; verify on install (SI-7).</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Software Bill of Materials (SBOM)</h2>
+    <table><tr><th>Component</th><th>Version</th><th>Status</th></tr><tr><td>OpenSSL</td><td>1.0.1</td><td><span class="badge bad">EOL</span> OpenSSL &lt; 3.0 is end-of-life (1.0.x/1.1.x no longer receive security fixes)</td></tr></table>
+  </div>
+
+  <div class="card">
+    <h2>Framework coverage</h2>
+    <table><tr><th>Framework</th><th>Version</th><th>Jurisdiction</th><th>Controls exercised</th></tr><tr><td>NIST Cybersecurity Framework</td><td>2.0 (Feb 2024)</td><td>US (voluntary, international use)</td><td>DE.CM-06, GV.SC-04, GV.SC-06, GV.SC-07, ID.AM-02, ID.AM-04, ID.AM-07, ID.RA-01, PR.AA-01, PR.AA-05, PR.DS-01, PR.DS-02, PR.DS-06, PR.PS-01</td></tr><tr><td>NIST SP 800-53 Security and Privacy Controls</td><td>Rev. 5</td><td>US federal (widely adopted)</td><td>CA-3, CM-14, CM-6, CM-8, IA-5, IA-5(7), PM-5, PT-2, PT-3, RA-5, SA-11, SA-15, SA-22, SA-9, SA-9(3), SC-13, SC-23, SC-28, SC-8, SC-8(1), SI-16, SI-7, SI-7(1), SR-3, SR-4, SR-6</td></tr><tr><td>NIST SP 800-161 C-SCRM (supply chain)</td><td>Rev. 1</td><td>US federal</td><td>-, MA-SA-15 flow-down to suppliers, Provenance &amp; component inventory, SA-15 dev process flow-down, SA-8 secure design flow-down, SA-9, SA-9 external services, SR-11 component authenticity, SR-3 supply-chain controls, SR-4, Supplier assessment &amp; review</td></tr><tr><td>EU General Data Protection Regulation</td><td>Regulation (EU) 2016/679</td><td>European Union</td><td>Art. 24, Art. 25, Art. 28, Art. 28(1), Art. 28(3)(h), Art. 30, Art. 32(1), Art. 32(1)(a), Art. 44, Art. 46, Art. 49, Art. 5, Art. 5(1)(f), Art. 6, Art. 9</td></tr><tr><td>HIPAA Security Rule</td><td>45 CFR Part 164, Subpart C (in force)</td><td>US (health)</td><td>164.306, 164.308(a)(1)(ii)(A), 164.308(a)(5)(ii)(D), 164.308(a)(8), 164.308(b)(1), 164.312(a)(2)(i), 164.312(a)(2)(iv), 164.312(c)(1), 164.312(c)(2), 164.312(d), 164.312(e)(1), 164.312(e)(2)(ii), 164.314(a), 164.502, 164.514</td></tr><tr><td>AICPA Trust Services Criteria (SOC 2)</td><td>TSC 2017, revised 2022</td><td>US (AICPA)</td><td>C1.1, CC3.2, CC6.1, CC6.6, CC6.7, CC6.8, CC7.1, CC8.1, CC9.2, P3.1, P4.1</td></tr><tr><td>CCPA as amended by CPRA</td><td>Cal. Civ. Code 1798.100 et seq. + CCR Title 11 regs</td><td>US - California</td><td>1798.100, 1798.100(e), 1798.140(ae) sensitive PI, 1798.140(ag), 1798.140(ag) service provider, 1798.140(j) contractor, 1798.140(v), 1798.81.5, CCR 7051 due diligence</td></tr><tr><td>PCI DSS</td><td>4.0.1 (June 2024; v4 future-dated reqs in force since 31 Mar 2025)</td><td>Global (card brands); applies only when cardholder data in scope</td><td>11.5, 12.3.4, 12.8, 12.8.1, 12.8.4, 12.8.5, 2.2, 3.2.1, 3.3, 3.4 (only if PAN present), 3.6.1, 3.7.1, 4.2.1, 6.2.4, 6.3.1, 6.3.2, 6.3.3, 8.3.1, 8.6.2</td></tr><tr><td>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</td><td>Rev. 5 Moderate baseline referenced</td><td>US federal cloud</td><td>CA-3, CM-14, CM-6, CM-8, IA-5 (Moderate), PT-2, PT-3, RA-5 (Moderate), SA-22, SA-9, SC-13 (Moderate), SC-8 (Moderate), SI-16 (Moderate), SI-7 (Moderate), SR-6</td></tr><tr><td>CMMC (DoD)</td><td>Program final rule 32 CFR (eff. 16 Dec 2024); 48 CFR/DFARS final (eff. 10 Nov 2025)</td><td>US DoD supply chain; L2 maps to NIST SP 800-171 Rev.2</td><td>CM.L2-3.4.1, IA.L2-3.5.7, IA.L2-3.5.8, MP.L2-3.8.x (if CUI), RA.L2-3.11.2, SA-9 flow-down, SC.L2-3.13.11, SC.L2-3.13.8, SI.L2-3.14.1, flow-down SR; C3PAO assessment</td></tr><tr><td>Digital Operational Resilience Act</td><td>Regulation (EU) 2022/2554 (applies since 17 Jan 2025)</td><td>European Union (financial entities + ICT third parties)</td><td>Art. 28, Art. 28(4), Art. 29, Art. 30, Art. 8, Art. 9(2), Art. 9(3), Art. 9(4)</td></tr><tr><td>ISO/IEC 27001 Annex A</td><td>2022</td><td>International</td><td>A.5.12, A.5.14, A.5.17, A.5.19, A.5.20, A.5.22, A.5.34, A.5.9, A.8.11, A.8.19, A.8.24, A.8.27, A.8.28, A.8.32, A.8.8, A.8.9</td></tr></table>
+  </div>
+
+  <div class="card foot">
+    <p><b>Method:</b> automated static analysis; risk scored with NIST SP 800-30. Results are
+    indicators — every FAIL and MANUAL item must be confirmed by a qualified assessor before a
+    risk decision. The scanner reads the artifact only; it does not execute or modify it.</p>
+    <p><b>Framework sources:</b></p>
+    <div><b>NIST Cybersecurity Framework</b> (2.0 (Feb 2024)) — <a href="https://doi.org/10.6028/NIST.CSWP.29">source</a></div><div><b>NIST SP 800-53 Security and Privacy Controls</b> (Rev. 5) — <a href="https://doi.org/10.6028/NIST.SP.800-53r5">source</a></div><div><b>NIST SP 800-161 C-SCRM (supply chain)</b> (Rev. 1) — <a href="https://doi.org/10.6028/NIST.SP.800-161r1">source</a></div><div><b>EU General Data Protection Regulation</b> (Regulation (EU) 2016/679) — <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj">source</a></div><div><b>HIPAA Security Rule</b> (45 CFR Part 164, Subpart C (in force)) — <a href="https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-C">source</a></div><div><b>AICPA Trust Services Criteria (SOC 2)</b> (TSC 2017, revised 2022) — <a href="https://www.aicpa-cima.com/resources/landing/trust-services-criteria">source</a></div><div><b>CCPA as amended by CPRA</b> (Cal. Civ. Code 1798.100 et seq. + CCR Title 11 regs) — <a href="https://oag.ca.gov/privacy/ccpa">source</a></div><div><b>PCI DSS</b> (4.0.1 (June 2024; v4 future-dated reqs in force since 31 Mar 2025)) — <a href="https://www.pcisecuritystandards.org/document_library/">source</a></div><div><b>FedRAMP (uses NIST SP 800-53 Rev.5 baselines)</b> (Rev. 5 Moderate baseline referenced) — <a href="https://www.fedramp.gov/">source</a></div><div><b>CMMC (DoD)</b> (Program final rule 32 CFR (eff. 16 Dec 2024); 48 CFR/DFARS final (eff. 10 Nov 2025)) — <a href="https://dodcio.defense.gov/CMMC/">source</a></div><div><b>Digital Operational Resilience Act</b> (Regulation (EU) 2022/2554 (applies since 17 Jan 2025)) — <a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj">source</a></div><div><b>ISO/IEC 27001 Annex A</b> (2022) — <a href="https://www.iso.org/standard/27001">source</a></div>
+  </div>
+</div></body></html>

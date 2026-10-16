@@ -1,0 +1,16 @@
+# Fictitious vendor security questionnaire (self-attestation).
+# Deliberately optimistic so the scanner can demonstrate attestation reconciliation:
+# several of these claims are contradicted by the demo_vendor_app fixture.
+vendor: "ExampleVendor Ltd. (fictitious)"
+product: "demo_vendor_app"
+version: "1.0.0"
+contact: "security@example-vendor.test"
+
+claims:
+  encryption_in_transit: true      # contradicted: binary embeds an http:// endpoint
+  no_hardcoded_secrets: true       # contradicted: AWS-style key embedded
+  strong_cryptography_only: true   # contradicted: MD5 referenced
+  code_signed: true                # contradicted: no signature present
+  processes_personal_data: false   # contradicted: patient/ssn/dob markers present
+  sbom_provided: false
+  data_locations: ["EU"]
